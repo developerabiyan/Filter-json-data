@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Bank Employee</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1 class="text-center lead fw-bold bg-warning display-1">BANK EMPLOYEES DATA</h1>
+        <select name="" id="sel" class="form-control ">
+            <option value="all">Select all</option>
+        </select>
+    </div>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th> 
+                    <th>NAME</th>
+                    <th>POSITION</th>
+                    <th>DEPARTMENT</th>
+                    <th>SALARY</th>
+                    <th>EMAIL</th>
+                </tr>
+            </thead>
+            <tbody class="body">
+
+            </tbody>
+        </table>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        let displaydata = function () {
+            for (let i = 0; i < data.length; i++) {
+                document.getElementsByClassName('body')[0].innerHTML += `
+                
+                <tr>
+                    <td class = "bg-warning">${data[i].id}</td>
+                    <td>${data[i].name}</td>
+                    <td>${data[i].position}</td>
+                    <td>${data[i].department}</td>
+                    <td class = "bg-warning">${data[i].salary}</td>
+                    <td>${data[i].email}</td>
+                </tr>
+                `
+                document.getElementById('sel').innerHTML += `
+                <option value="${data[i].id}">${data[i].name}</option>
+                `
+            }
+
+            let filter = function (id) {
+                if (id == "all") {
+                    document.getElementsByClassName('body')[0].innerHTML = "";
+                    displaydata();
+                } else {
+                    var upt_id = data.filter((d) => d.id == id);
+                    document.getElementsByClassName('body')[0].innerHTML = "";
+                    for (let i = 0; i < upt_id.length; i++) {
+                        document.getElementsByClassName('body')[0].innerHTML += `
+                                <tr>
+                                    <td>${upt_id[i].id}</td>
+                                    <td>${upt_id[i].name}</td>
+                                    <td>${upt_id[i].position}</td>
+                                    <td>${upt_id[i].department}</td>
+                                    <td>${upt_id[i].salary}</td>
+                                    <td>${upt_id[i].email}</td>
+                                </tr>
+                                `;
+                    }
+                }
+            };
+
+            // Add event listener for dropdown change
+            document.getElementById('sel').addEventListener('change', function () {
+                filter(this.value);
+            });
+        }
+
+        displaydata();
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>
